@@ -1,4 +1,2 @@
-build
-.vscode
-.cache
-
+build/*
+!build/.keep
