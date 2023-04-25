@@ -25,6 +25,11 @@ module digital_lock_top
   logic [3:0] re_enter;
   logic [7:0] exit;
   logic is_a_key_pressed;
+  logic [3:0] led_reg;
+  logic [3:0] led_lock;
+  logic [2:0] rgb_reg;
+  logic [2:0] rgb_lock;
+  logic pulse_25Hz;
 
     // The for-loop creates 16 assign statements
     genvar i;
@@ -41,18 +46,55 @@ module digital_lock_top
       for (j=0; j < 4; j++)
       begin : pulse_generator
         single_pulse_detector #(.detect_type(2'b0))
-                              pls_inst_1 (.clk(clk), .rst(rst), .input_signal(btn_db[i]), .output_pulse(btn_pulse[i]));
+                              pls_inst_1 (.clk(clk), .rst(rst), .input_signal(btn_db[j]), .output_pulse(btn_pulse[j]));
       end
     endgenerate
 
-  digital_lock lock_uut(.clk(clk), .rst(rst), .password(password), .re_enter(re_enter), .exit(exit),.is_a_key_pressed(is_a_key_pressed), .btn(btn_pulse), .led(led), .rgb(rgb));
-//   assign btn_pulse = btn;
-  assign is_a_key_pressed = (btn_pulse == 4'b0000) ? 1'b0 : 1'b1;
+     pulse_gen pulse_25 (.clk(clk), .rst(rst), .pulse(pulse_25Hz));
+
+  digital_lock lock_uut(.clk(clk), .rst(rst), .password(password), .re_enter(re_enter), .exit(exit),.is_a_key_pressed(is_a_key_pressed), .btn(btn_pulse), .led(led_lock), .rgb(rgb_lock));
+
+always_ff @ (posedge clk, posedge rst) begin
+    if (rst) begin
+        led_reg <= 4'b0000;
+        rgb_reg <= 4'b0000;
+    end else begin
+        if (pulse_25Hz) begin
+            if (led_lock == 4'b0101) begin
+                led_reg = ~led_lock;
+            end 
+            else if (led_lock == 4'b1111) begin
+                led_reg = ~led_lock;
+            end
+            else begin
+                led_reg = led_lock;
+            end
+
+            if (rgb_lock == 3'b001) begin
+                rgb_reg = {~rgb[2],rgb[1],~rgb[0]};
+            end 
+            else if (rgb_lock == 3'b010) begin
+                rgb_reg = ~rgb_lock;
+            end
+            else begin
+                rgb_reg = rgb_lock;
+            end
+
+        end else begin
+            led_reg = led_reg;
+            rgb_reg = rgb_reg;
+        end
+    end
+end
+
+  assign is_a_key_pressed = btn_pulse[3] | btn_pulse[2] | btn_pulse[1] | btn_pulse[0];
   assign password = 16'b0100_0001_0010_0001;
   assign re_enter = 4'b0010;
   assign exit = 8'b0001_0010;
 
   assign rst = sw[0];
+  assign led = led_reg;
+  assign rgb = rgb_reg;
 
 endmodule
 

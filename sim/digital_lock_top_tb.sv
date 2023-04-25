@@ -43,73 +43,78 @@ module digital_lock_top_tb();
 
     // Unlock Digital Lock
     btn = 4'b0100; // South
-    #(CP*1);
+    #(CP*200_000);
     btn = 4'b0000;
-    #(CP*4);
+    #(CP*200_000);
 
     btn = 4'b0001; // West
-    #(CP*1);
+    #(CP*200_000);
     btn = 4'b0000;
-    #(CP*4);
+    #(CP*200_000);
 
     btn = 4'b0010; // East
-    #(CP*1);
+    #(CP*200_000);
     btn = 4'b0000;
-    #(CP*4);
+    #(CP*200_000);
 
     btn = 4'b0001; // West
-    #(CP*1);
+    #(CP*200_000);
     btn = 4'b0000;
-    #(CP*4);
+    #(CP*200_000);
 
     // Reset
     btn = 4'b1000; // North, back to lock
-    #(CP*1);
+    #(CP*200_000);
     btn = 4'b0000;
-    #(CP*4);
+    #(CP*200_000);
 
     // Re-enter attempt
     btn = 4'b0001; // West
-    #(CP*1);
+    #(CP*200_000);
     btn = 4'b0000;
-    #(CP*4);
+    #(CP*200_000);
 
     btn = 4'b0010; // East
-    #(CP*1);
+    #(CP*200_000);
     btn = 4'b0000;
-    #(CP*4);
+    #(CP*200_000);
 
     // Second East, back to reset
     btn = 4'b0010; // East, back to lock
-    #(CP*1);
+    #(CP*200_000);
     btn = 4'b0000;
-    #(CP*4);
+    #(CP*200_000);
 
     // Wrong guess
     btn = 4'b0100; // South
-    #(CP*1);
+    #(CP*200_000);
     btn = 4'b0000;
-    #(CP*4);
+    #(CP*200_000);
 
     btn = 4'b0001; // West
-    #(CP*1);
+    #(CP*200_000);
     btn = 4'b0000;
-    #(CP*4);
+    #(CP*200_000);
 
     btn = 4'b0010; // East
-    #(CP*1);
+    #(CP*200_000);
     btn = 4'b0000;
-    #(CP*4);
+    #(CP*200_000);
 
-    btn = 4'b1000; // West
-    #(CP*1);
+    btn = 4'b1000; // North, Alarm State
+    #(CP*200_000);
     btn = 4'b0000;
-    #(CP*4);
+    #(CP*200_000);
 
-    btn = 4'b1000; // North, back to lock
-    #CP
+    btn = 4'b0001; // West
+    #(CP*200_000);
     btn = 4'b0000;
-    #(CP*4);
+    #(CP*200_000);
+
+    btn = 4'b0010; // East, back to lock
+    #(CP*200_000);
+    btn = 4'b0000;
+    #(CP*200_000);
 
      $finish;
   end

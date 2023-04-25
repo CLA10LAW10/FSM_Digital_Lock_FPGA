@@ -271,7 +271,7 @@ module digital_lock(
       alarm :
       begin
         led_reg = 4'b0101;
-        rgb_reg = 3'b101;
+        rgb_reg = 3'b001;
       end // End alarm state
 
       a1 :
