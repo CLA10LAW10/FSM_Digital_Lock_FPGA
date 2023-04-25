@@ -6,8 +6,8 @@ module pulse_gen(
     output pulse
 );
 
-//logic [23:0] counter; // Roughly 25Hz
-logic [10:0] counter; // Roughly 25Hz
+logic [23:0] counter; // Roughly 25Hz
+//logic [10:0] counter; // Roughly 25Hz
 logic pulse_reg;
 always_ff @(posedge clk, posedge rst) begin
     if (rst == 1) begin

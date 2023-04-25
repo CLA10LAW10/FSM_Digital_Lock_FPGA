@@ -27,8 +27,12 @@ module digital_lock_top
   logic is_a_key_pressed;
   logic [3:0] led_reg;
   logic [3:0] led_lock;
+  logic [3:0] led_toggle1;
+  logic [3:0] led_toggle2;
   logic [2:0] rgb_reg;
   logic [2:0] rgb_lock;
+  logic [2:0] rgb_toggle1;
+  logic [2:0] rgb_toggle2;
   logic pulse_25Hz;
 
     // The for-loop creates 16 assign statements
@@ -58,31 +62,39 @@ always_ff @ (posedge clk, posedge rst) begin
     if (rst) begin
         led_reg <= 4'b0000;
         rgb_reg <= 4'b0000;
+        led_toggle1 <= 4'b1010;
+        led_toggle2 <= 4'b1111;
+        rgb_toggle1 <= 3'b001;
+        rgb_toggle2 <= 3'b010;
     end else begin
         if (pulse_25Hz) begin
             if (led_lock == 4'b0101) begin
-                led_reg = ~led_lock;
+                led_toggle1 <= ~led_toggle1;
+                led_reg <= led_toggle1;
             end 
             else if (led_lock == 4'b1111) begin
-                led_reg = ~led_lock;
+                led_toggle2 <= ~led_toggle2;
+                led_reg <= led_toggle2;
             end
             else begin
-                led_reg = led_lock;
+                led_reg <= led_lock;
             end
 
             if (rgb_lock == 3'b001) begin
-                rgb_reg = {~rgb[2],rgb[1],~rgb[0]};
+                rgb_toggle1 <= {~rgb_toggle1[2],rgb_toggle1[1],~rgb_toggle1[0]};
+                rgb_reg <= rgb_toggle1;
             end 
             else if (rgb_lock == 3'b010) begin
-                rgb_reg = ~rgb_lock;
+                rgb_toggle2 <= {rgb_toggle2[2],~rgb_toggle2[1],rgb_toggle2[0]};
+                rgb_reg <= rgb_toggle2;
             end
             else begin
-                rgb_reg = rgb_lock;
+                rgb_reg <= rgb_lock;
             end
 
         end else begin
-            led_reg = led_reg;
-            rgb_reg = rgb_reg;
+            led_reg <= led_reg;
+            rgb_reg <= rgb_reg;
         end
     end
 end

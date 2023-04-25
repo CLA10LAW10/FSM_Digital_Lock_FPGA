@@ -241,16 +241,28 @@ module digital_lock(
       end // End Reset state
 
       lock :
+      begin
         led_reg = 4'b0000;
+        rgb_reg = 3'b000;
+      end // End lock state
 
       s1 :
+      begin
         led_reg = 4'b1000;
+        rgb_reg = 3'b000;
+      end // End s1 state
 
       s2 :
+      begin
         led_reg = 4'b1100;
+        rgb_reg = 3'b000;
+      end // End s2 state
 
       s3 :
+      begin
         led_reg = 4'b1110;
+        rgb_reg = 3'b000;
+      end // End s3 state
 
       unlock :
       begin
@@ -259,13 +271,22 @@ module digital_lock(
       end // End unlock state
 
       w1 :
+      begin
         led_reg = 4'b1000;
+        rgb_reg = 3'b000;
+      end // End w1 state
 
       w2 :
+      begin
         led_reg = 4'b1100;
+        rgb_reg = 3'b000;
+      end // End w2 state
 
       w3 :
+      begin
         led_reg = 4'b1110;
+        rgb_reg = 3'b000;
+      end // End w3 state
 
 
       alarm :
@@ -276,18 +297,27 @@ module digital_lock(
 
       a1 :
       begin
-        led_reg = led_reg;
-        rgb_reg = rgb_reg;
+        led_reg = 4'b0101;
+        rgb_reg = 3'b001;
       end // End a1 state
 
       r1 :
+      begin
         led_reg = 4'b1000;
+        rgb_reg = 3'b000;
+      end // End r1 state
 
       r2 :
+      begin
         led_reg = 4'b1100;
+        rgb_reg = 3'b000;
+      end // End r2 state
 
       r3 :
+      begin
         led_reg = 4'b1110;
+        rgb_reg = 3'b000;
+      end // End r3 state
 
       default:
       begin
