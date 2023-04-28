@@ -16,17 +16,9 @@ module digital_lock(
   typedef enum {reset, lock, s1, s2, s3, unlock, w1, w2, w3, alarm, a1, r1, r2, r3} state_type;
   state_type state_reg, state_next;
 
-  //   logic [15:0] password;
-  //   logic [3:0] re_enter;
-  //   logic [7:0] exit;
-
-  //   assign password = 16'b0100_0001_0010_0001;
-  //   assign re_enter = 4'b0010;
-  //   assign exit = 8'b0001_0010;
-
+  // LED Signals
   logic [3:0] led_reg;
   logic [2:0] rgb_reg;
-
 
   always_ff @ (posedge clk or posedge rst)
   begin
@@ -43,15 +35,7 @@ module digital_lock(
   // Button presses, N S E W
   always_ff @ (posedge clk)
   begin
-    // if (is_a_key_pressed) begin
-    // end else begin
-    //     state_next = state_next;
-    // end
-    // case (state_reg)
-    // reset :
-    // begin
-    //   state_next = lock;
-    // end // End Reset state
+
     if (state_reg == reset)
     begin
       state_next = lock;

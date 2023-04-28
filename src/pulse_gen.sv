@@ -7,7 +7,7 @@ module pulse_gen(
 );
 
 logic [23:0] counter; // Roughly 25Hz
-//logic [10:0] counter; // Roughly 25Hz
+// logic [10:0] counter; // Simulation Value.
 logic pulse_reg;
 always_ff @(posedge clk, posedge rst) begin
     if (rst == 1) begin

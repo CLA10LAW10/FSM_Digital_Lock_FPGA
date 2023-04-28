@@ -109,10 +109,3 @@ end
   assign rgb = rgb_reg;
 
 endmodule
-
-
-//   debounce  #(.clk_freq(clk_freq), .stable_time(stable_time))
-//     db_inst_1(.clk(clk), .rst(rst), .button(btn[1]), .result(btn1_debounce));
-
-//   single_pulse_detector #(.detect_type(2'b0))
-//                         pls_inst_1 (.clk(clk), .rst(rst), .input_signal(btn1_debounce), .output_pulse(btn1_pulse));
